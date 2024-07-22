@@ -1,0 +1,12 @@
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/bin/Debug/net6.0/ImageProcessingService.deps.json
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/bin/Debug/net6.0/ImageProcessingService.dll
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/bin/Debug/net6.0/ImageProcessingService.pdb
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.csproj.AssemblyReference.cache
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.GeneratedMSBuildEditorConfig.editorconfig
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.AssemblyInfoInputs.cache
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.AssemblyInfo.cs
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.csproj.CoreCompileInputs.cache
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.dll
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/refint/ImageProcessingService.dll
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ImageProcessingService.pdb
+/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/Debug/net6.0/ref/ImageProcessingService.dll

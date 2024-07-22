@@ -1,0 +1,125 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/11474665/source/ImagProcessingService/ImageProcessingService/ImageProcessingService.csproj": {}
+  },
+  "projects": {
+    "/Users/11474665/source/ImagProcessingService/ImageProcessingService/ImageProcessingService.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/11474665/source/ImagProcessingService/ImageProcessingService/ImageProcessingService.csproj",
+        "projectName": "ImageProcessingService",
+        "projectPath": "/Users/11474665/source/ImagProcessingService/ImageProcessingService/ImageProcessingService.csproj",
+        "packagesPath": "/Users/11474665/.nuget/packages/",
+        "outputPath": "/Users/11474665/source/ImagProcessingService/ImageProcessingService/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/11474665/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "SciSharp.TensorFlow.Redist": {
+              "target": "Package",
+              "version": "[2.16.0, )"
+            },
+            "SciSharp.TensorFlow.Redist-OSX": {
+              "target": "Package",
+              "version": "[2.15.0, )"
+            },
+            "TensorFlow.NET": {
+              "target": "Package",
+              "version": "[0.150.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.osx-arm64",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.osx-arm64",
+              "version": "[6.0.31, 6.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.osx-x64",
+              "version": "[6.0.31, 6.0.31]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.301/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "osx-arm64": {
+          "#import": []
+        },
+        "osx-x64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

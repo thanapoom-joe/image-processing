@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
+        <UserSecretsId>dotnet-ImagProcessingService-27971962-1689-4C82-B719-87E671754BF4</UserSecretsId>
+        <RootNamespace>ImagProcessingService</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ImageProcessingService\ImageProcessingService.csproj" />
+    </ItemGroup>
+</Project>
