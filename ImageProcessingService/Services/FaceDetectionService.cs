@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
 using Tensorflow;
 using static Tensorflow.Binding;
 
@@ -18,6 +19,11 @@ public class FaceDetectionService : IFaceDetectionService
     private string projectDirectory;
     private string workspaceRelativePath;
     private string assetsRelativePath;
+
+    private BufferBlock<string> dataBLock;
+    private TransformBlock<string, ResultResponse<ModelOutput>> processBlock;
+    private ActionBlock<ResultResponse<ModelOutput>> sucessActionBlock;
+    private ActionBlock<ResultResponse<ModelOutput>> failedActionBlock;
 
     public FaceDetectionService(
         ILogger<FaceDetectionService> logger)
@@ -33,8 +39,16 @@ public class FaceDetectionService : IFaceDetectionService
         var graph = new Graph().as_default();
         this.session = tf.Session(graph);
         tf.train.import_meta_graph($"{modelPath}/saved_model.pb");
+
+        this.dataBLock = new BufferBlock<string>();
+        this.processBlock = new TransformBlock<string, ResultResponse<ModelOutput>>(async path => await Execute(path));
+        this.sucessActionBlock = new ActionBlock<ResultResponse<ModelOutput>>(_ => { });
+        this.failedActionBlock = new ActionBlock<ResultResponse<ModelOutput>>(_ => { });
+
+        this.dataBLock.LinkTo(this.processBlock);
+        this.processBlock.LinkTo(this.sucessActionBlock, predicate: result => result.IsSuccess);
+        this.processBlock.LinkTo(this.failedActionBlock, predicate: result => !result.IsSuccess);
     }
-    
     public void OutputPrediction(ModelOutput prediction)
     {
         string imageName = Path.GetFileName(prediction.ImagePath);
@@ -42,7 +56,25 @@ public class FaceDetectionService : IFaceDetectionService
                                    $"| Predicted Value: {prediction.PredictedLabel}");
     }
 
-    public Task<object> ProcessImage(string filePath)
+    public async Task ProcessImage(string imageDirectory)
+    {
+        var files = Directory.GetFiles(imageDirectory);
+        foreach (var file in files)
+        {
+            this.dataBLock.Post(file);
+        }
+        
+        this.dataBLock.Complete();
+        await this.dataBLock.Completion;
+        this.processBlock.Complete();
+        await this.processBlock.Completion;
+        this.sucessActionBlock.Complete();
+        await this.sucessActionBlock.Completion;
+        this.failedActionBlock.Complete();
+        await this.failedActionBlock.Completion;
+    }
+
+    private Task<ResultResponse<ModelOutput>> Execute(string filePath)
     {
         // Load the image
         var tensor = LoadImage(filePath);

@@ -1,7 +1,9 @@
+using ImageProcessingService.Models;
+
 namespace ImageProcessingService.Interfaces;
 
 public interface IFaceDetectionService
 {
     void Initialize();
-    Task<object> ProcessImage(string filePath);
+    Task ProcessImage(string imageDirectory);
 }
