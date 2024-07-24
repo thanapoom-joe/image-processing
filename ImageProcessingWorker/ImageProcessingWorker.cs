@@ -23,7 +23,6 @@ public class ImageProcessingWorker : IHostedService
     /// </summary>
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        this._faceDetectionService.Initialize();
         var testDirectory = Path.Combine(Environment.CurrentDirectory, "test");
         if (!Directory.Exists(testDirectory))
         {

@@ -1,1 +1,6 @@
 /ImageProcessingWorker/assets/
+/.vs
+/ImageProcessingService/bin/Debug/net6.0
+/ImageProcessingService/obj
+/ImageProcessingWorker/bin/Debug/net6.0
+/ImageProcessingWorker/obj

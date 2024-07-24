@@ -1,10 +1,6 @@
 using ImageProcessingService.Interfaces;
 using ImageProcessingService.Models;
-using ImageProcessingService.Settings;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using Tensorflow;
 using static Tensorflow.Binding;
@@ -16,38 +12,47 @@ public class FaceDetectionService : IFaceDetectionService
 {
     private Session session;
     private readonly ILogger<FaceDetectionService> logger;
-    private string projectDirectory;
-    private string workspaceRelativePath;
-    private string assetsRelativePath;
+    private readonly IFileService fileService;
 
     private BufferBlock<string> dataBLock;
-    private TransformBlock<string, ResultResponse<ModelOutput>> processBlock;
-    private ActionBlock<ResultResponse<ModelOutput>> sucessActionBlock;
-    private ActionBlock<ResultResponse<ModelOutput>> failedActionBlock;
+    private TransformBlock<string, ResultResponseWithData<ModelOutput>> processBlock;
+    private ActionBlock<ResultResponseWithData<ModelOutput>> sucessActionBlock;
+    private ActionBlock<ResultResponseWithData<ModelOutput>> failedActionBlock;
 
     public FaceDetectionService(
+        IFileService fileService,
         ILogger<FaceDetectionService> logger)
     {
+        this.fileService = fileService;
         this.logger = logger;
     }
 
-    public void Initialize()
+    public Task InitializeAsync()
     {
-        string modelPath = Path.Combine(Environment.CurrentDirectory, "save_model");
+        string modelPath = this.fileService.PathCombine(Environment.CurrentDirectory, "save_model");
 
         // Load the model
         var graph = new Graph().as_default();
         this.session = tf.Session(graph);
+
+        if (this.fileService.FileExist(modelPath))
+        {
+            this.logger.LogError("Not found model for pre-trained data.");
+            throw new Exception();
+        }
+
         tf.train.import_meta_graph($"{modelPath}/saved_model.pb");
 
         this.dataBLock = new BufferBlock<string>();
-        this.processBlock = new TransformBlock<string, ResultResponse<ModelOutput>>(async path => await Execute(path));
-        this.sucessActionBlock = new ActionBlock<ResultResponse<ModelOutput>>(_ => { });
-        this.failedActionBlock = new ActionBlock<ResultResponse<ModelOutput>>(_ => { });
+        this.processBlock = new TransformBlock<string, ResultResponseWithData<ModelOutput>>(async path => await Execute(path));
+        this.sucessActionBlock = new ActionBlock<ResultResponseWithData<ModelOutput>>(_ => { });
+        this.failedActionBlock = new ActionBlock<ResultResponseWithData<ModelOutput>>(_ => { });
 
         this.dataBLock.LinkTo(this.processBlock);
         this.processBlock.LinkTo(this.sucessActionBlock, predicate: result => result.IsSuccess);
         this.processBlock.LinkTo(this.failedActionBlock, predicate: result => !result.IsSuccess);
+
+        return Task.CompletedTask;
     }
     public void OutputPrediction(ModelOutput prediction)
     {
@@ -74,7 +79,7 @@ public class FaceDetectionService : IFaceDetectionService
         await this.failedActionBlock.Completion;
     }
 
-    private Task<ResultResponse<ModelOutput>> Execute(string filePath)
+    private Task<ResultResponseWithData<ModelOutput>> Execute(string filePath)
     {
         // Load the image
         var tensor = LoadImage(filePath);
